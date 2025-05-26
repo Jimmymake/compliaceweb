@@ -18,7 +18,7 @@ interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
-  const name = localStorage.getItem("name");
+  const name = localStorage.getItem("adminemail");
   const firstLetter = name ? name.charAt(0).toUpperCase() : "?";
 
   const { onDrawerToggle } = props;

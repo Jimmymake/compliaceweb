@@ -1,259 +1,3 @@
-// import Alert from "@mui/material/Alert";
-
-// import * as React from "react";
-// // import { useState } from "react";
-// import Checkbox from "@mui/material/Checkbox";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import FormLabel from "@mui/material/FormLabel";
-// import Grid from "@mui/material/Grid";
-// import OutlinedInput from "@mui/material/OutlinedInput";
-// import { styled } from "@mui/material/styles";
-// import { Typography, Stack, Button } from "@mui/material";
-// import { Radio, RadioGroup } from "@mui/material";
-// import { FormControl } from "@mui/material";
-// import Snackbar from "@mui/material/Snackbar";
-// import AddIcon from '@mui/icons-material/Add';
-// // import Alert from "@mui/material/Alert";
-// import { useState } from "react";
-
-// const FormGrid = styled(Grid)(() => ({
-//   display: "flex",
-//   flexDirection: "column",
-// }));
-
-// export default function UltimateBeneficialOwner() {
-//   const [formData, setFormData] = useState({
-//     fullname: "",
-//     nationality: "",
-//     dateOfBirth: "",
-//     residentialAddress: "",
-//     percentageOfOwnership: "",
-//     sourceofFunds: "",
-//     politicallyExposedPerson: "",
-//   });
-
-//   const [alert, setAlert] = useState<{
-//     open: boolean;
-//     message: string;
-//     severity: "success" | "error" | "info" | "warning";
-//   }>({
-//     open: false,
-//     message: "",
-//     severity: "success",
-//   });
-
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-
-//     try {
-//       const url = "https://http-cors-proxy.p.rapidapi.com/";
-//       const options = {
-//         method: "POST",
-//         headers: {
-//           "x-rapidapi-key":
-//             "e24f6dad05msh00223ed232c1e0cp116c2bjsne8701539e428",
-//           "x-rapidapi-host": "http-cors-proxy.p.rapidapi.com",
-//           "Content-Type": "application/json",
-//           Origin: "www.example.com",
-//           "X-Requested-With": "www.example.com",
-//         },
-//         body: JSON.stringify({
-//           url: "https://retserereyeswebhook.site/5b608c29-b8e1-4ff5-a75c-c59b4eb9540e", // Target API URL
-//           method: "POST",
-//           body: formData, // Pass your form data here
-//           headers: {
-//             "Content-type": "application/json; charset=UTF-8",
-//           },
-//         }),
-//       };
-//       const response = await fetch(url, options);
-//       const result = await response.text();
-//       console.log("Success:", result);
-
-//       // Show success alert
-//       setAlert({
-//         open: true,
-//         message: "Form submitted successfully!",
-//         severity: "success",
-//       });
-//     } catch (error) {
-//       console.error("Error:", error);
-
-//       // Show error alert
-//       setAlert({
-//         open: true,
-//         message: "An error occurred while submitting the form.",
-//         severity: "error",
-//       });
-//     }
-//   };
-
-//   const handleCloseAlert = () => {
-//     setAlert({ ...alert, open: false });
-//   };
-
-//   return (
-//     <>
-//       <form onSubmit={handleSubmit}>
-//         <Stack>
-//           <Typography color="info" fontWeight="bold" variant="h6" gutterBottom>
-//             Ultimate Beneficial Owner
-//           </Typography>
-//           <Grid container spacing={3}>
-//             <FormGrid size={{ xs: 12, md: 6 }}>
-//               <FormLabel htmlFor="fullName" required>
-//                 Full Name
-//               </FormLabel>
-//               <OutlinedInput
-//                 id="fullName"
-//                 name="fullname"
-//                 type="text"
-//                 placeholder="Full Name"
-//                 value={formData.fullname}
-//                 onChange={handleChange}
-//                 required
-//                 size="small"
-//               />
-//             </FormGrid>
-//             <FormGrid size={{ xs: 12, md: 6 }}>
-//               <FormLabel htmlFor="nationality" required>
-//                 Nationality
-//               </FormLabel>
-//               <OutlinedInput
-//                 id="nationality"
-//                 name="nationality"
-//                 type="text"
-//                 placeholder="Nationality"
-//                 value={formData.nationality}
-//                 onChange={handleChange}
-//                 required
-//                 size="small"
-//               />
-//             </FormGrid>
-
-//             <FormGrid size={{ xs: 6 }}>
-//               <FormLabel htmlFor="dateOfBirth" required>
-//                 Date of Birth
-//               </FormLabel>
-//               <OutlinedInput
-//                 id="dateOfBirth"
-//                 name="dateOfBirth"
-//                 type="date"
-//                 value={formData.dateOfBirth}
-//                 onChange={handleChange}
-//                 required
-//                 size="small"
-//               />
-//             </FormGrid>
-
-//             <FormGrid size={{ xs: 6 }}>
-//               <FormLabel htmlFor="residentialAddress" required>
-//                 Residential Address
-//               </FormLabel>
-//               <OutlinedInput
-//                 id="residentialAddress"
-//                 name="residentialAddress"
-//                 type="text"
-//                 placeholder="Residential Address"
-//                 value={formData.residentialAddress}
-//                 onChange={handleChange}
-//                 required
-//                 size="small"
-//               />
-//             </FormGrid>
-
-//             <FormGrid size={{ xs: 6 }}>
-//               <FormLabel htmlFor="percentageOfOwnership" required>
-//                 Percentage of Ownership
-//               </FormLabel>
-//               <OutlinedInput
-//                 id="percentageOfOwnership"
-//                 name="percentageOfOwnership"
-//                 type="text"
-//                 placeholder="Percentage of Ownership"
-//                 value={formData.percentageOfOwnership}
-//                 onChange={handleChange}
-//                 required
-//                 size="small"
-//               />
-//             </FormGrid>
-
-//             <FormGrid size={{ xs: 12 }}>
-//               <FormLabel htmlFor="sourceOfFunds" required>
-//                 Source of Funds
-//               </FormLabel>
-//               <OutlinedInput
-//                 id="sourceOfFunds"
-//                 name="sourceOfFunds"
-//                 type="text"
-//                 placeholder="Source of Funds"
-//                 value={formData.sourceofFunds}
-//                 onChange={handleChange}
-//                 required
-//                 size="small"
-//               />
-//             </FormGrid>
-
-//        <FormControl>
-//           <FormLabel>
-//             Politicaly Exposed Person (If Yes:
-//             Provide Details: )
-//           </FormLabel>
-//           <RadioGroup>
-//             <FormControlLabel
-//               htmlFor="yes"
-//               control={<Radio />}
-//               label="yes"
-//               value="yes"
-
-//             />
-//             <FormControlLabel
-//               htmlFor="no"
-//               control={<Radio />}
-//               label="no"
-//               value="no"
-//             />
-//           </RadioGroup>
-//         </FormControl>
-//       </Grid>
-
-// <Stack>
-//   <AddIcon color="primary" fontSize="large" /> <FormLabel> Add Ultimate Beneficial Owner</FormLabel>
-// </Stack>
-
-//       <Button
-//         type="submit"
-//         variant="contained"
-//         color="primary"
-//         sx={{ mt: 3 }}
-//       >
-//         Submit
-//       </Button>
-//     </Stack>
-//       </form>
-
-//       {/* Snackbar for Alerts */}
-//       <Snackbar
-//         open={alert.open}
-//         autoHideDuration={2000}
-//         onClose={handleCloseAlert}
-//         anchorOrigin={{ vertical: "top", horizontal: "center" }} // Position the alert at the top center
-//       >
-//         <Alert variant="filled" severity={alert.severity}>
-//           {alert.message}
-//         </Alert>
-//       </Snackbar>
-//     </>
-//   );
-// }
 
 import Alert from "@mui/material/Alert";
 import * as React from "react";
@@ -288,26 +32,43 @@ export default function UltimateBeneficialOwner() {
 };
 
   type Ubo = {
-    fullname: string;
-    nationality: string;
-    dateOfBirth: string;
-    residentialAddress: string;
-    percentageOfOwnership: string;
-    sourceofFunds: string;
-    politicallyExposedPerson: string;
-    file: File | null;
+    Full_name: string;
+    Nationality: string;
+    Date_of_Birth: string;
+    Residential_Address: string;
+    Percentage_of_Ownership: string;
+    Source_of_funds_and_wealth: string;
+    is_pep: string; // "true" or "false"
+    pep_details: string; // Details if politically exposed person
+    // file?: File | null; // Optional file for PEP details
+    // fullname: string;
+    // nationality: string;
+    // dateOfBirth: string;
+    // residentialAddress: string;
+    // percentageOfOwnership: string;
+    // sourceofFunds: string;
+    // politicallyExposedPerson: string;
+    // file: File | null;
   };
 
   const [ubos, setUbos] = useState<Ubo[]>([
     {
-      fullname: "",
-      nationality: "",
-      dateOfBirth: "",
-      residentialAddress: "",
-      percentageOfOwnership: "",
-      sourceofFunds: "",
-      politicallyExposedPerson: "",
-      file: null,
+      Full_name: "",
+      Nationality: "",
+      Date_of_Birth: "",
+      Residential_Address: "",
+      Percentage_of_Ownership: "",
+      Source_of_funds_and_wealth: "",
+      is_pep: "",
+      pep_details: ""
+      // fullname: "",
+      // nationality: "",
+      // dateOfBirth: "",
+      // residentialAddress: "",
+      // percentageOfOwnership: "",
+      // sourceofFunds: "",
+      // politicallyExposedPerson: "",
+      // file: null,
     },
   ]);
 
@@ -321,28 +82,46 @@ export default function UltimateBeneficialOwner() {
     severity: "success",
   });
 
+  // const handleChange = (
+  //   index: number,
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {
+  //   const { name, value } = e.target;
+  //   setUbos((prevUbos) =>
+  //     prevUbos.map((ubo, i) => (i === index ? { ...ubo, [name]: value } : ubo))
+  //   );
+  // };
   const handleChange = (
     index: number,
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setUbos((prevUbos) =>
-      prevUbos.map((ubo, i) => (i === index ? { ...ubo, [name]: value } : ubo))
+      prevUbos.map((ubo, i) =>
+        i === index ? { ...ubo, [name]: value } : ubo
+      )
     );
   };
-
   const handleAddUbo = () => {
     setUbos((prevUbos) => [
       ...prevUbos,
       {
-        fullname: "",
-        nationality: "",
-        dateOfBirth: "",
-        residentialAddress: "",
-        percentageOfOwnership: "",
-        sourceofFunds: "",
-        politicallyExposedPerson: "",
-        file: null, // <-
+        Full_name: "",
+        Nationality: "",
+        Date_of_Birth: "",
+        Residential_Address: "",
+        Percentage_of_Ownership: "",
+        Source_of_funds_and_wealth: "",
+        is_pep: "",
+        pep_details: ""
+        // fullname: "",
+        // nationality: "",
+        // dateOfBirth: "",
+        // residentialAddress: "",
+        // percentageOfOwnership: "",
+        // sourceofFunds: "",
+        // politicallyExposedPerson: "",
+        // file: null, // <-
       },
     ]);
   };
@@ -351,52 +130,110 @@ export default function UltimateBeneficialOwner() {
     setUbos((prevUbos) => prevUbos.filter((_, i) => i !== index));
   };
 
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const token = localStorage.getItem("token");
+
+  //   try {
+  //     const options = {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         ...(token && { Authorization: `Bearer ${token}` }),
+  //       },
+  //       body: JSON.stringify({
+  //         url: "https://fastapi-backend-9.onrender.com/api/v1/create-ubos", // Target API URL
+  //         method: "POST",
+  //         body: ubos, // Send all UBOs
+  //         headers: {
+  //           "Content-type": "application/json; charset=UTF-8",
+  //         },
+  //       }),
+  //     };
+ 
+  //     setAlert({
+  //       open: true,
+  //       message: "Form submitted successfully!",
+  //       severity: "success",
+  //     });
+  //   } catch (error) {
+  //     console.error("Error:", error);
+
+  //     // Show error alert
+  //     setAlert({
+  //       open: true,
+  //       message: "An error occurred while submitting the form.",
+  //       severity: "error",
+  //     });
+  //   }
+  // };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-      const url = "https://http-cors-proxy.p.rapidapi.com/";
-      const options = {
-        method: "POST",
-        headers: {
-          "x-rapidapi-key":
-            "e24f6dad05msh00223ed232c1e0cp116c2bjsne8701539e428",
-          "x-rapidapi-host": "http-cors-proxy.p.rapidapi.com",
-          "Content-Type": "application/json",
-          Origin: "www.example.com",
-          "X-Requested-With": "www.example.com",
-        },
-        body: JSON.stringify({
-          url: "https://webhook.site/5b608c29-b8e1-4ff5-a75c-c59b4eb9540e", // Target API URL
-          method: "POST",
-          body: ubos, // Send all UBOs
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-        }),
-      };
-      const response = await fetch(url, options);
-      const result = await response.text();
-      console.log("Success:", result);
-
-      // Show success alert
+  
+    const token = localStorage.getItem("token"); // Retrieve the token from localStorage
+    if (!token) {
       setAlert({
         open: true,
-        message: "Form submitted successfully!",
-        severity: "success",
-      });
-    } catch (error) {
-      console.error("Error:", error);
-
-      // Show error alert
-      setAlert({
-        open: true,
-        message: "An error occurred while submitting the form.",
+        message: "Authentication token is missing. Please log in.",
         severity: "error",
       });
+      return;
+    }
+  
+    // Prepare the payload
+    const payload = {
+      ubos: ubos.map((ubo) => ({
+        Full_name: ubo.Full_name,
+        Nationality: ubo.Nationality,
+        Date_of_Birth: ubo.Date_of_Birth,
+        Residential_Address: ubo.Residential_Address,
+        Percentage_of_Ownership: ubo.Percentage_of_Ownership,
+        Source_of_funds_and_wealth: ubo.Source_of_funds_and_wealth,
+        is_pep: ubo.is_pep,
+        pep_details: ubo.pep_details,
+      })),
+    };
+  
+    try {
+      // Make the API request
+      const response = await fetch(
+        "https://fastapi-backend-9.onrender.com/api/v1/create-ubos",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          },
+          body: JSON.stringify(payload), // Convert the payload to JSON
+        }
+      );
+  
+      if (response.ok) {
+        const responseData = await response.json();
+        setAlert({
+          open: true,
+          message: "UBOs submitted successfully!",
+          severity: "success",
+        });
+        console.log("Response:", responseData);
+      } else {
+        const errorText = await response.text();
+        setAlert({
+          open: true,
+          message: `Submission failed: ${errorText}`,
+          severity: "error",
+        });
+        console.error("Error:", response.status, errorText);
+      }
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: "An error occurred while submitting. Please try again.",
+        severity: "error",
+      });
+      console.error("Error:", error);
     }
   };
-
   const handleCloseAlert = () => {
     setAlert({ ...alert, open: false });
   };
@@ -430,16 +267,27 @@ export default function UltimateBeneficialOwner() {
                     Full Name
                   </FormLabel>
                   <OutlinedInput
+  id={`fullname-${index}`}
+  name="Full_name" // Must match the key in the UBO object
+  type="text"
+  placeholder="Full Name"
+  value={ubo.Full_name}
+  onChange={(e) => handleChange(index, e)}
+  required
+  autoComplete="name"
+  size="small"
+/>
+                  {/* <OutlinedInput
                     id={`fullname-${index}`}
                     name="fullname"
                     type="text"
                     placeholder="Full Name"
-                    value={ubo.fullname}
+                    value={ubo.Full_name}
                     onChange={(e) => handleChange(index, e)}
                     required
                     autoComplete="name"
                     size="small"
-                  />
+                  /> */}
                 </FormGrid>
                 <FormGrid size={{ xs: 12, md: 6 }}>
                   <FormLabel htmlFor={`nationality-${index}`} required>
@@ -447,10 +295,10 @@ export default function UltimateBeneficialOwner() {
                   </FormLabel>
                   <OutlinedInput
                     id={`nationality-${index}`}
-                    name="nationality"
+                    name="Nationality"
                     type="text"
                     placeholder="Nationality"
-                    value={ubo.nationality}
+                    value={ubo.Nationality}
                     autoComplete="country"
                     onChange={(e) => handleChange(index, e)}
                     required
@@ -463,9 +311,9 @@ export default function UltimateBeneficialOwner() {
                   </FormLabel>
                   <OutlinedInput
                     id={`dateOfBirth-${index}`}
-                    name="dateOfBirth"
+                    name="Date_of_Birth"
                     type="date"
-                    value={ubo.dateOfBirth}
+                    value={ubo.Date_of_Birth}
                     onChange={(e) => handleChange(index, e)}
                     required
                     size="small"
@@ -477,10 +325,10 @@ export default function UltimateBeneficialOwner() {
                   </FormLabel>
                   <OutlinedInput
                     id={`residentialAddress-${index}`}
-                    name="residentialAddress"
+                    name="Residential_Address"
                     type="address-line1"
                     placeholder="Residential Address"
-                    value={ubo.residentialAddress}
+                    value={ubo.Residential_Address}
                     onChange={(e) => handleChange(index, e)}
                     required
                     size="small"
@@ -495,10 +343,10 @@ export default function UltimateBeneficialOwner() {
                   </FormLabel>
                   <OutlinedInput
                     id={`percentageOfOwnership-${index}`}
-                    name="percentageOfOwnership"
+                    name="Percentage_of_Ownership"
                     type="text"
                     placeholder="Percentage of Ownership"
-                    value={ubo.percentageOfOwnership}
+                    value={ubo.Percentage_of_Ownership}
                     onChange={(e) => handleChange(index, e)}
                     required
                     size="small"
@@ -510,10 +358,10 @@ export default function UltimateBeneficialOwner() {
                   </FormLabel>
                   <OutlinedInput
                     id={`sourceofFunds-${index}`}
-                    name="sourceofFunds"
+                    name="Source_of_funds_and_wealth"
                     type="text"
                     placeholder="Source of Funds"
-                    value={ubo.sourceofFunds}
+                    value={ubo.Source_of_funds_and_wealth}
                     onChange={(e) => handleChange(index, e)}
                     required
                     size="small"
@@ -563,8 +411,9 @@ export default function UltimateBeneficialOwner() {
                     Politically Exposed Person (If Yes: Provide Details: )
                   </FormLabel>
                   <RadioGroup
-                    name="politicallyExposedPerson"
-                    value={ubo.politicallyExposedPerson}
+                    name="is_pep"
+                    id={`is_pep-${index}`}
+                    value={ubo.is_pep}
                     onChange={(e) => handleChange(index, e)}
                     row
                   >
@@ -580,7 +429,7 @@ export default function UltimateBeneficialOwner() {
                     />
                   </RadioGroup>
                 </FormGrid>
-                {ubo.politicallyExposedPerson === "true" && (
+                {ubo.is_pep === "true" && (
                   <>
                     {/* <FormGrid size={{ xs: 12 }}>
                       <FormLabel htmlFor={`sourceofFunds-${index}`} required>
@@ -596,7 +445,7 @@ export default function UltimateBeneficialOwner() {
                         size="small"
                       />
                     </FormGrid> */}
-                    <FormGrid size={{ xs: 12,  }}>
+                    {/* <FormGrid size={{ xs: 12,  }}>
                       <FormLabel
                         htmlFor="Directors passport/ID copies"
                         required
@@ -628,7 +477,22 @@ export default function UltimateBeneficialOwner() {
     </InputAdornment>
   }
 />
-                    </FormGrid>
+                    </FormGrid> */}
+                         <FormGrid size={{ xs: 12 }}>
+                  <FormLabel htmlFor={`pep_details-${index}`} required>
+                    Pep Details
+                  </FormLabel>
+                  <OutlinedInput
+                    id={`pep_details-${index}`}
+                    name="pep_details"
+                    type="text"
+                    placeholder="Pep Details"
+                    value={ubo.pep_details}
+                    onChange={(e) => handleChange(index, e)}
+                    required
+                    size="small"
+                  />
+                </FormGrid>
                   </>
                 )}
               </React.Fragment>

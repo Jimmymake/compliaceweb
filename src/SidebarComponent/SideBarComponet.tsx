@@ -78,11 +78,11 @@ const categories: Category[] = [
   {
     id: "Utility",
     children: [
-      {
-        id: "Settings",
-        icon: <SettingsIcon />,
-        route: "/settings", // Example route for Settings
-      },
+      // {
+      //   id: "Settings",
+      //   icon: <SettingsIcon />,
+      //   route: "/settings", // Example route for Settings
+      // },
       {
         id: "Log Out",
         icon: <LogoutIcon />,

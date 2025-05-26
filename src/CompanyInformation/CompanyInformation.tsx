@@ -119,6 +119,7 @@ export default function CompanyInformation() {
         const result = await response.json();
         console.log("Success:", result);
         console.log({ formData });
+        console.log('token:', token);
         alert("Form submitted successfully!");
 
         // Optionally, send license fields to their own API if needed

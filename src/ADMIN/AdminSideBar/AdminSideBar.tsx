@@ -58,7 +58,12 @@ const categories = [
       {
         id: "Log Out",
         icon: <LogoutIcon />,
-        route: "/logout", // Example route for Log Out
+        route: "", // Example route for Log Out
+        action: () => {
+          // localStorage.removeItem("token");
+          localStorage.removeItem("adminemail");
+          window.location.href = "/SignIn"; // Redirect to Sign In page
+        },
       },
     ],
   },
@@ -101,7 +106,8 @@ export default function SideBarComponent(props: DrawerProps) {
             <ListItem sx={{ py: 2, px: 3 }}>
               <ListItemText sx={{ color: "#fff" }}>{id}</ListItemText>
             </ListItem>
-            {children.map(({ id: childId, icon, route }) => (
+            {/* {children.map(({ id: childId, icon, route ,action}) => (
+              
               <ListItem disablePadding key={childId}>
                 <ListItemButton
                   component={RouterLink} // Use RouterLink for navigation
@@ -112,7 +118,20 @@ export default function SideBarComponent(props: DrawerProps) {
                   <ListItemText>{childId}</ListItemText>
                 </ListItemButton>
               </ListItem>
-            ))}
+            ))} */}
+            {children.map(({ id: childId, icon, route, action }) => (
+  <ListItem disablePadding key={childId}>
+    <ListItemButton
+      component={route ? RouterLink : "button"} // Use RouterLink if a route is provided
+      to={route || undefined} // Link to the route if it exists
+      sx={item}
+      onClick={action ? action : undefined} // Execute the action if it exists
+    >
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText>{childId}</ListItemText>
+    </ListItemButton>
+  </ListItem>
+))}
             <Divider sx={{ mt: 2 }} />
           </Box>
         ))}

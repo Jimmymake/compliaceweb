@@ -18,6 +18,9 @@ import ColorModeSelect from "../shared-theme/ColorModeSelect";
 // import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 import AdminmainPage from '../ADMIN/AdminMainPage/AdminMainPage';
+import Snackbar from "@mui/material/Snackbar";
+import { useState } from "react";
+import Alert from "@mui/material/Alert";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -37,6 +40,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
       "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
   }),
 }));
+
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
   height: "calc((1 - var(--template-frame-height, 0)) * 100dvh)",
@@ -69,6 +73,18 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const [open, setOpen] = React.useState(false);
   const [isAdmin, setIsAdmin] = React.useState(false);
 
+
+  const [alert, setAlert] = useState<{
+    open: boolean;
+    message: string;
+    severity: "success" | "error" | "info" | "warning";
+  }>({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -88,17 +104,23 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     const email = (document.getElementById("email") as HTMLInputElement).value;
     const password = (document.getElementById("password") as HTMLInputElement)
       .value;
-    // if (
-    //   email === "briancheloti@gmail.com" &&
-    //   password === "brian123" &&
-    //   isAdmin
-    // ) {
-    //   alert("Admin login successful!");
-    //   setTimeout(() => {
-    //     window.location.href = "/AdminDashboard";
-    //   }, 1200);
-    //   return;
-    // }
+    if (
+      email === "briancheloti@gmail.com" &&
+      password === "brian123" &&
+      isAdmin
+    ) {
+      // alert("Admin login successful!");
+      setAlert({
+        open: true,
+        message: "Admin login successful!",
+        severity: "success",
+      });
+      localStorage.setItem("adminemail", email);
+      setTimeout(() => {
+        window.location.href = "/AdminDashboard";
+      }, 1200);
+      return;
+    }
 
     const loginData = {
       user: {
@@ -115,13 +137,19 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify(loginData),
         }
       );
 
       if (response.ok) {
         const responseData = await response.json();
 
-        alert("Login successful!");
+        // alert("Login successful!");
+        setAlert({
+          open: true,
+          message: "Login successfully!",
+          severity: "success",
+        });
         console.log("Login successful:", responseData.token);
         console.log("Login successful:", responseData.user.Name);
         console.log("Login successful:", responseData.user.Email);
@@ -133,12 +161,18 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
           window.location.href = "/UserDashboard";
         }, 1200);
       } else if (response.status === 401 || response.status === 403) {
-        alert("Login failed: Invalid email or password.");
+        // alert("Login failed: Invalid email or password.");
+
         // console.error('Login failed: Invalid email or password.');
         console.error("Login failed:", response.status, await response.text());
       }
     } catch (e) {
-      alert("An error occurred while logging in. Please try again later.");
+      // alert("An error occurred while logging in. Please try again later.");
+      setAlert({
+        open: true,
+        message: "An error occurred while logging in. Please try again later.",
+        severity: "error",
+      });
       console.error("Error:", e);
     }
   };
@@ -169,6 +203,13 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 
     return isValid;
   };
+
+
+  
+  const handleCloseAlert = () => {
+    setAlert({ ...alert, open: false });
+  };
+
 
   return (
     <AppTheme {...props}>
@@ -293,6 +334,17 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
           </Box>
         </Card>
       </SignInContainer>
+            <Snackbar
+              open={alert.open}
+              autoHideDuration={2000}
+              onClose={handleCloseAlert}
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+              <Alert variant="filled" severity={alert.severity}>
+                {alert.message}
+              </Alert>
+            </Snackbar>
     </AppTheme>
+    
   );
 }

@@ -47,10 +47,10 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route path="Home" element={<Home />} />
+            {/* <Route path="Home" element={<Home />} /> */}
             <Route path="Form" element={<FormTab />} />
             <Route path="Chart" element={<Messages />} />
-            <Route index element={<Home />} />
+            <Route index element={<FormTab />} />
           </Route>
 
 
