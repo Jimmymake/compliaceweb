@@ -15,7 +15,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import PendingIcon from '@mui/icons-material/Pending';
 
  
 
@@ -26,8 +29,8 @@ const categories = [
     id: "Overview",
     children: [
       {
-        id: "DataGrid",
-        icon: <HomeIcon />,
+        id: "User Data",
+        icon: <FormatListNumberedIcon/>,
         route: "/DataGrid", // Route for Home
       },
     ],
@@ -36,13 +39,18 @@ const categories = [
     id: "Compliance",
     children: [
       {
-        id: "Form",
-        icon: <DynamicFormIcon />,
+        id: "Approved",
+        icon: <VerifiedUserIcon />,
         route: " ", // Route for Form
       },
       {
-        id: "Chart",
-        icon: <ForumIcon />,
+        id: "Pending",
+        icon: <PendingIcon />,
+        route: " ", // Route for Form
+      },
+      {
+        id: "Rejected",
+        icon: <DeleteForeverIcon />,
         route: " ", // Route for Messages
       },
     ],
@@ -61,7 +69,7 @@ const categories = [
         route: "", // Example route for Log Out
         action: () => {
           // localStorage.removeItem("token");
-          localStorage.removeItem("adminemail");
+          localStorage.removeItem("email");
           window.location.href = "/SignIn"; // Redirect to Sign In page
         },
       },

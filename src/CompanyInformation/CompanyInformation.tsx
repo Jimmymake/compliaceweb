@@ -39,9 +39,9 @@ export default function CompanyInformation() {
       target_markets: [],
       countries_of_operation: [],
       previously_used_payment_gateways: [],
-      licenceNumber: "",
-      licenceType: "",
-      jurisdictions: "",
+      Licence_number: "",
+      Licence_type: "",
+      Jurisdiction: "",
     },
   });
 
@@ -124,16 +124,16 @@ export default function CompanyInformation() {
 
         // Optionally, send license fields to their own API if needed
         if (formData.company.is_licensed) {
-          await fetch("YOUR_LICENSE_API_ENDPOINT", {
+          await fetch("https://fastapi-backend-134.onrender.com/api/v1/generate-licence", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
               ...(token && { Authorization: `Bearer ${token}` }),
             },
             body: JSON.stringify({
-              licenceNumber: formData.company.licenceNumber,
-              licenceType: formData.company.licenceType,
-              jurisdictions: formData.company.jurisdictions,
+              lLicence_number: formData.company.Licence_number,
+              Licence_type: formData.company.Licence_type,
+              Jurisdiction: formData.company.Jurisdiction,
               // add company id or reference if needed
             }),
           });

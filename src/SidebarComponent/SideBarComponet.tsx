@@ -8,21 +8,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Link as RouterLink } from "react-router-dom"; // Import RouterLink
-import HomeIcon from "@mui/icons-material/Home";
 import ForumIcon from "@mui/icons-material/Forum";
 import DynamicFormIcon from "@mui/icons-material/DynamicForm";
-import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import { useNavigate } from "react-router-dom";
+
 
 
 type CategoryChild = {
@@ -91,6 +84,7 @@ const categories: Category[] = [
           localStorage.removeItem("token");
           localStorage.removeItem("email");
           localStorage.removeItem("name");
+
           window.location.href = "/SignIn"; // or use navigate('/SignIn') if you have access to the hook
         },
       },
@@ -114,6 +108,8 @@ const itemCategory = {
 };
 
 export default function SideBarComponent(props: DrawerProps) {
+
+
   const { ...other } = props;
 
 

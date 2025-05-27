@@ -128,7 +128,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
         email,
         phone: phone ? `+254${phone}` : "",
         password,
-        role: "admin",
+        role: "user",
         status: "active",
         location,
       },

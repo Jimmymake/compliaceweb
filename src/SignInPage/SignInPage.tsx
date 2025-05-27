@@ -17,10 +17,11 @@ import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 // import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
-import AdminmainPage from '../ADMIN/AdminMainPage/AdminMainPage';
+// import AdminmainPage from '../ADMIN/AdminMainPage/AdminMainPage';
 import Snackbar from "@mui/material/Snackbar";
 import { useState } from "react";
 import Alert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -71,7 +72,8 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
-  const [isAdmin, setIsAdmin] = React.useState(false);
+  // const [isAdmin, setIsAdmin] = React.useState(false);
+  const navigate = useNavigate();
 
 
   const [alert, setAlert] = useState<{
@@ -93,89 +95,87 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     setOpen(false);
   };
 
-    const handleAdminCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsAdmin(event.target.checked);
+  //   const handleAdminCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setIsAdmin(event.target.checked);
+  // };
+
+
+const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault(); // Prevent form refresh
+
+  if (!validateInputs()) return;
+
+  const email = (document.getElementById("email") as HTMLInputElement).value;
+  const password = (document.getElementById("password") as HTMLInputElement).value;
+
+  const loginData = {
+    user: {
+      email,
+      password,
+    },
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!validateInputs()) return;
+  try {
+    const response = await fetch(
+      "https://orderly-m2qc.onrender.com/Api/users/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+      }
+    );
 
-    const email = (document.getElementById("email") as HTMLInputElement).value;
-    const password = (document.getElementById("password") as HTMLInputElement)
-      .value;
-    if (
-      email === "briancheloti@gmail.com" &&
-      password === "brian123" &&
-      isAdmin
-    ) {
-      // alert("Admin login successful!");
+    if (response.ok) {
+      const responseData = await response.json();
+
+      // Save user data to localStorage
+      localStorage.setItem("role", responseData.user.Role);
+      localStorage.setItem("token", responseData.token);
+      localStorage.setItem("email", responseData.user.Email);
+      localStorage.setItem("name", responseData.user.Name);
+
+      // Display success alert
       setAlert({
         open: true,
-        message: "Admin login successful!",
+        message: "Login successful!",
         severity: "success",
       });
-      localStorage.setItem("adminemail", email);
+
+      // Redirect based on role
+      const role = responseData.user.Role.toLowerCase();
       setTimeout(() => {
-        window.location.href = "/AdminDashboard";
-      }, 1200);
-      return;
-    }
-
-    const loginData = {
-      user: {
-        email,
-        password,
-      },
-    };
-
-    try {
-      const response = await fetch(
-        "https://orderly-m2qc.onrender.com/Api/users/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(loginData),
+        if (role === "admin") {
+          navigate("/AdminDashboard"); // Admin dashboard
+          // window.location.href = "/AdminDashboard"; // Admin dashboard
+        } else if (role === "user") {
+          navigate("/UserDashboard"); // User dashboard
+          // window.location.href = "/UserDashboard"; // User dashboard
+        } else {
+          setAlert({
+            open: true,
+            message: "Unknown role. Please contact support.",
+            severity: "warning",
+          });
         }
-      );
-
-      if (response.ok) {
-        const responseData = await response.json();
-
-        // alert("Login successful!");
-        setAlert({
-          open: true,
-          message: "Login successfully!",
-          severity: "success",
-        });
-        console.log("Login successful:", responseData.token);
-        console.log("Login successful:", responseData.user.Name);
-        console.log("Login successful:", responseData.user.Email);
-        console.log("Login successful:", responseData.user);
-        localStorage.setItem("token", responseData.token);
-        localStorage.setItem("email", responseData.user.Email);
-        localStorage.setItem("name", responseData.user.Name);
-        setTimeout(() => {
-          window.location.href = "/UserDashboard";
-        }, 1200);
-      } else if (response.status === 401 || response.status === 403) {
-        // alert("Login failed: Invalid email or password.");
-
-        // console.error('Login failed: Invalid email or password.');
-        console.error("Login failed:", response.status, await response.text());
-      }
-    } catch (e) {
-      // alert("An error occurred while logging in. Please try again later.");
+      }, 1200);
+    } else if (response.status === 401 || response.status === 403) {
       setAlert({
         open: true,
-        message: "An error occurred while logging in. Please try again later.",
+        message: "Invalid email or password!",
         severity: "error",
       });
-      console.error("Error:", e);
     }
-  };
+  } catch (e) {
+    setAlert({
+      open: true,
+      message: "An error occurred while logging in. Please try again later.",
+      severity: "error",
+    });
+    console.error("Error:", e);
+  }
+};
 
   const validateInputs = () => {
     const email = document.getElementById("email") as HTMLInputElement;
@@ -272,7 +272,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 color={passwordError ? "error" : "primary"}
               />
             </FormControl>
-          <FormControlLabel
+          {/* <FormControlLabel
               control={
                 <Checkbox
                   value="admin"
@@ -282,7 +282,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 />
               }
               label="Admin"
-            />
+            /> */}
             <ForgotPassword open={open} handleClose={handleClose} />
             <Button
               type="submit"

@@ -9,7 +9,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import { Box } from "@mui/material";
-import { Tabs, Tab } from "@mui/material";
+// import { Tabs, Tab } from "@mui/material";
 
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
@@ -18,7 +18,7 @@ interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
-  const name = localStorage.getItem("adminemail");
+  const name = localStorage.getItem("name");
   const firstLetter = name ? name.charAt(0).toUpperCase() : "?";
 
   const { onDrawerToggle } = props;

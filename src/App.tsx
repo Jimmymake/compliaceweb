@@ -13,6 +13,7 @@ import Messages from "./Messages/Messages";
 import AdminDashboard from "./ADMIN/AdminMainPage/AdminMainPage";
 import Test from './test';
 import DataGrid from './ADMIN/DataGrid/DataGrid';
+import UserDetails from './ADMIN/DataGrid/UserDetail';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             <Route path="Chart" element={<Messages />} />
             <Route index element={<FormTab />} />
           </Route>
+          {/* <Route path="/user-details/:id" element={<UserDetails />} /> */}
 
 
           <Route path="*" element={<NotFound />} />
